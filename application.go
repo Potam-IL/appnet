@@ -16,11 +16,14 @@ import (
 )
 
 type Application struct {
-	Id             string
-	Secret         string
-	RedirectURI    string
-	Scopes         Scopes
-	PasswordSecret string
+	Id				string
+	Secret			string
+	RedirectURI		string
+	Scopes			Scopes
+	PasswordSecret	string
+	AccessToken		string					// Added, DAW, 06-Nov-2013
+	UserName		string					// Added, DAW, 06-Nov-2013
+	UserId			string					// Added, DAW, 06-Nov-2013
 }
 
 var DefaultApplication = &Application{}
