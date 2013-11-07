@@ -2,7 +2,7 @@
 // Use of this source code is governed by the ISC
 // license that can be found in the LICENSE file.
 
-package adn
+package appnet
 
 type Filter struct {
 	Type           string   `json:"type"`             // Either "show" or "block" for whether this filter should exclude everything except for what's shown or show everything except for what's blocked.

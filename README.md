@@ -1,19 +1,23 @@
 adn
 ===
 
-Go interface to the App.net API
+Go interface to the App.net API - forked from github.com/whee/adn
+
+Now known as github.com/hybotics/appnet
 
 Installation
 ------------
 
 The usual:
 
-	$ go get github.com/whee/adn
+	$ go get github.com/hybotics/appnet
 
 Package documentation
 ---------------------
 
+/*
 [godoc output courtesy of GoPkgDoc](http://go.pkgdoc.org/github.com/whee/adn)
+*/
 
 Example usage
 -------------
