@@ -45,10 +45,16 @@ type Counts struct {
 	Stars     int `json:"stars"`     // The number of posts starred by this user.
 }
 
-// Retrieve the user specified by id using token as authentication.
-func (c *Application) GetUser(token string, id string) (u *User, err error) {
+/*
+	Retrieve the user specified by id using token as authentication.
+
+	The idname can be either a user id *OR* an @username
+*/
+func (c *Application) GetUser(token string, idname string) (u *User, err error) {
 	u = &User{}
-	err = c.Do(&Request{Token: token}, "retrieve user", EpArgs{User: id}, u)
+
+	err = c.Do(&Request{Token: token}, "retrieve user", EpArgs{User: idname}, u)
+
 	return
 }
 
