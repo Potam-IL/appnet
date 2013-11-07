@@ -21,9 +21,9 @@ type Application struct {
 	RedirectURI		string
 	Scopes			Scopes
 	PasswordSecret	string
-	AccessToken		string					// Added, DAW, 06-Nov-2013
-	UserName		string					// Added, DAW, 06-Nov-2013
-	UserId			string					// Added, DAW, 06-Nov-2013
+	Token			string					// Access token, Added, DAW, 06-Nov-2013
+	UserName		string					// User name, Added, DAW, 06-Nov-2013
+	UserId			string					// User ID, Added, DAW, 06-Nov-2013
 }
 
 var DefaultApplication = &Application{}
