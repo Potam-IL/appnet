@@ -164,16 +164,16 @@ func (c *Application) AccessToken(code string) (string, error) {
 // PasswordToken is used to carry out the password flow. The function submits
 // the username and password to get an access token. This token is returned
 // as a string.
-func (c *Application) PasswordToken(username, password string) (accessToken string, err error) {
+func (c *Application) PasswordToken (userName, userPassword string) (aToken string, err error) {
 	data := url.Values{}
 	data.Set("client_id", c.Id)
 	data.Set("password_grant_secret", c.PasswordSecret)
 	data.Set("grant_type", "password")
-	data.Set("username", username)
-	data.Set("password", password)
+	data.Set("username", userName)
+	data.Set("password", userPassword)
 	data.Set("scope", c.Scopes.Spaced())
 
-	r := &Request{
+	r := &Request {
 		Body:     strings.NewReader(data.Encode()),
 		BodyType: "application/x-www-form-urlencoded",
 	}
@@ -184,7 +184,7 @@ func (c *Application) PasswordToken(username, password string) (accessToken stri
 		Error       string
 	}{}
 */
-	resp := &Response{}
+	resp := &Response {}
 
 	err = c.Do(r, "get access token", EpArgs{}, resp)
 
@@ -196,7 +196,7 @@ func (c *Application) PasswordToken(username, password string) (accessToken stri
 		return "", errors.New(resp.Error)
 	}
 */
-	accessToken = ""
+	aToken = ""
 
 	if err != nil {
 		return
@@ -205,7 +205,7 @@ func (c *Application) PasswordToken(username, password string) (accessToken stri
 	if resp.Error != "" {
 		err = errors.New(resp.Error)
 	} else {
-		accessToken = resp.AccessToken
+		aToken = resp.AccessToken
 	}
 
 	return
