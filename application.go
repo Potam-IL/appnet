@@ -17,6 +17,8 @@ import (
 
 type Application struct {
 	AccessToken		string
+	UserId			string
+	UserName		string
 	Id             string
 	Secret         string
 	RedirectURI    string
