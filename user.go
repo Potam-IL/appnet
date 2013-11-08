@@ -5,6 +5,7 @@
 package appnet
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -55,9 +56,18 @@ func (c *Application) GetUser(aToken string, idname string) (u *User, err error)
 
     req := &Request { Token: aToken }
 
+    resp := &User
+
 	epArgs.User = idname
 
-	err = c.Do(req, "retrieve user", epArgs, u)
+	err = c.Do(req, "retrieve user", epArgs, resp)
+
+	if err != nil {
+		fmt.Printf("(GetUser 1) err = %s\n", err)
+		return
+	}
+
+	fmt.Printf("(GetUser 2) User ID = %s\n", resp.Id)
 
 	return
 }
