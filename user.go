@@ -56,7 +56,7 @@ func (c *Application) GetUser(aToken string, idname string) (u *User, err error)
 
     req := &Request { Token: aToken }
 
-    resp := &User
+    resp := &User {}
 
 	epArgs.User = idname
 
