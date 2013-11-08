@@ -113,7 +113,12 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	if epOptions == nil || epOptions.ResponseEnvelope {
 		re := &responseEnvelope{Data: v}
 
-		err = json.Unmarshal(resp, re)
+		respReader := bytes.NewReader(resp)
+		respDecoder := json.NewDecoder(respReader)
+
+		err = respDecoder(re)
+
+//		err = json.Unmarshal(resp, re)
 
 		if err != nil {
 			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
