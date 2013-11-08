@@ -57,11 +57,13 @@ func (c *Application) GetUser(token string, idname string) (u *User, err error) 
         Token:    token,
     }
 
-//	resp := &User {}
+	resp := &User {}
 
 	epArgs.User = idname
 
-	err = c.Do(req, "retrieve user", epArgs, u)
+	err = c.Do(req, "retrieve user", epArgs, resp)
+
+	u = resp
 
 	return
 }
