@@ -93,7 +93,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	body, err := c.request(r, name, args)
 
 	if err != nil {
-		fmt.Printf("(appnet.Do 1) err = '%s'\n", err)
+//		fmt.Printf("(appnet.Do 1) err = '%s'\n", err)
 		return
 	}
 
@@ -102,7 +102,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	resp, err := ioutil.ReadAll(body)
 
 	if err != nil {
-		fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
+//		fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
 		return
 	}
 
@@ -111,15 +111,15 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	if epOptions == nil || epOptions.ResponseEnvelope {
 		re := &responseEnvelope{Data: v}
 
-		respReader := bytes.NewReader(resp)
-		respDecoder := json.NewDecoder(respReader)
+//		respReader := bytes.NewReader(resp)
+//		respDecoder := json.NewDecoder(respReader)
 
-		err = respDecoder.Decode(v)
+//		err = respDecoder.Decode(v)
 
-//		err = json.Unmarshal(resp, re)
+		err = json.Unmarshal(resp, re)
 
 		if err != nil {
-			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
+//			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
 			return
 		}
 
@@ -130,7 +130,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		err = json.Unmarshal(resp, v)
 
 		if err != nil {
-			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
+//			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
 			return
 		}
 	}
