@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -100,6 +101,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	resp, err := ioutil.ReadAll(body)
 
 	if err != nil {
+		fmt.Printf("(appnet.Do 1) err = '%s'\n", err)
 		return
 	}
 
@@ -111,6 +113,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		err = json.Unmarshal(resp, re)
 
 		if err != nil {
+			fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
 			return
 		}
 
@@ -121,6 +124,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		err = json.Unmarshal(resp, v)
 
 		if err != nil {
+			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
 			return
 		}
 	}
