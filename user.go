@@ -51,9 +51,17 @@ type Counts struct {
 	The idname can be either a user id *OR* an @username
 */
 func (c *Application) GetUser(token string, idname string) (u *User, err error) {
-	u = &User{}
+	var epArgs EpArgs
 
-	err = c.Do(&Request{Token: token}, "retrieve user", EpArgs{User: idname}, u)
+    req := &Request {
+        Token:    token,
+    }
+
+	resp := &User {}
+
+	epArgs.User = idname
+
+	err = c.Do(req, "retrieve user", epArgs, u)
 
 	return
 }
