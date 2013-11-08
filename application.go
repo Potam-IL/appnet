@@ -109,14 +109,14 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	epOptions := ApiEndpoints[name].Options
 
 	if epOptions == nil || epOptions.ResponseEnvelope {
-		re := &responseEnvelope{Data: v}
+//		re := &responseEnvelope{Data: v}
 
-//		respReader := bytes.NewReader(resp)
-//		respDecoder := json.NewDecoder(respReader)
+		respReader := bytes.NewReader(resp)
+		respDecoder := json.NewDecoder(respReader)
 
-//		err = respDecoder.Decode(v)
+		err = respDecoder.Decode(v)
 
-		err = json.Unmarshal(resp, re)
+//		err = json.Unmarshal(resp, re)
 
 		if err != nil {
 //			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
@@ -130,7 +130,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		err = json.Unmarshal(resp, v)
 
 		if err != nil {
-//			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
+			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
 			return
 		}
 	}
