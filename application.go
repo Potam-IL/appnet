@@ -36,18 +36,8 @@ type Request struct {
 	BodyType string    // Value for the Content-Type header
 }
 
-/*
-	resp := &struct {
-		AccessToken string `json:"access_token"`
-		Error       string
-	}{}
-*/
-type Response struct {
-	AccessToken string `json:"access_token"`
-	Error       string
-}
 
-func (c *Application) request(r *Request, name string, args EpArgs) (body io.ReadCloser, err error) {
+func (c *Application) request (r *Request, name string, args EpArgs) (body io.ReadCloser, err error) {
 	var path bytes.Buffer
 
 	err = epTemplates.ExecuteTemplate(&path, name, args)
@@ -198,8 +188,15 @@ func (c *Application) AccessToken (code string) (string, error) {
 	PasswordToken is used to carry out the password flow. The function
 		submits the username and password to get an access token. This
 		token is returned as a string.
+
+		** Works **
 */
 func (c *Application) PasswordToken (userName, userPassword string) (aToken string, err error) {
+	type Response struct {
+		AccessToken string `json:"access_token"`
+		Error       string
+	}
+
 	data := url.Values{}
 	data.Set("client_id", c.Id)
 	data.Set("password_grant_secret", c.PasswordSecret)
@@ -213,24 +210,10 @@ func (c *Application) PasswordToken (userName, userPassword string) (aToken stri
 		BodyType: "application/x-www-form-urlencoded",
 	}
 
-/*
-	resp := &struct {
-		AccessToken string `json:"access_token"`
-		Error       string
-	}{}
-*/
 	resp := &Response {}
 
 	err = c.Do(r, "get access token", EpArgs{}, resp)
 
-/*
-	if err != nil {
-		return "", err
-	}
-	if resp.Error != "" {
-		return "", errors.New(resp.Error)
-	}
-*/
 	aToken = ""
 
 	if err != nil {
@@ -245,3 +228,4 @@ func (c *Application) PasswordToken (userName, userPassword string) (aToken stri
 
 	return
 }
+
