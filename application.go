@@ -101,10 +101,8 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 
 	resp, err := ioutil.ReadAll(body)
 
-	fmt.Printf("(appnet.Do 2) resp(%d) = '%s'\n", len(resp), resp)
-
 	if err != nil {
-		fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
+		fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
 		return
 	}
 
@@ -121,7 +119,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 //		err = json.Unmarshal(resp, re)
 
 		if err != nil {
-			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
+			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
 			return
 		}
 
@@ -132,7 +130,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		err = json.Unmarshal(resp, v)
 
 		if err != nil {
-			fmt.Printf("(appnet.Do 5) err = '%s'\n", err)
+			fmt.Printf("(appnet.Do 4) err = '%s'\n", err)
 			return
 		}
 	}
