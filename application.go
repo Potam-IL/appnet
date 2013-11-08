@@ -116,7 +116,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 		respReader := bytes.NewReader(resp)
 		respDecoder := json.NewDecoder(respReader)
 
-		err = respDecoder.Decode(re)
+		err = respDecoder.Decode(v)
 
 //		err = json.Unmarshal(resp, re)
 
