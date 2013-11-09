@@ -116,7 +116,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 
 //		err = respDecoder.Decode(v)
 
-		err = json.Unmarshal(resp, re)
+		err = json.Unmarshal(resp, v)
 
 		if err != nil {
 			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
