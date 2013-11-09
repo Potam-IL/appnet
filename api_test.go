@@ -15,6 +15,6 @@ func TestGet(t *testing.T) {
 	}
 
 	if p.User.Username != "whee" {
-		t.Error("Post username is incorrect")
+		t.Errorf("Post username %q is incorrect in post %+v", p.User.Username, p)
 	}
 }
