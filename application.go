@@ -18,14 +18,14 @@ import (
 )
 
 type Application struct {
-	Id				string
-	Secret			string
-	RedirectURI		string
-	Scopes			Scopes
-	PasswordSecret	string
-	Token			string					// Access token, Added, DAW, 06-Nov-2013
-	UserName		string					// User name, Added, DAW, 06-Nov-2013
-	UserId			string					// User ID, Added, DAW, 06-Nov-2013
+	Id             string
+	Secret         string
+	RedirectURI    string
+	Scopes         Scopes
+	PasswordSecret string
+	Token          string // Access token, Added, DAW, 06-Nov-2013
+	UserName       string // User name, Added, DAW, 06-Nov-2013
+	UserId         string // User ID, Added, DAW, 06-Nov-2013
 }
 
 var DefaultApplication = &Application{}
@@ -37,8 +37,7 @@ type Request struct {
 	BodyType string    // Value for the Content-Type header
 }
 
-
-func (c *Application) request (r *Request, name string, args EpArgs) (body io.ReadCloser, err error) {
+func (c *Application) request(r *Request, name string, args EpArgs) (body io.ReadCloser, err error) {
 	var path bytes.Buffer
 
 	err = epTemplates.ExecuteTemplate(&path, name, args)
@@ -89,11 +88,11 @@ func (c *Application) request (r *Request, name string, args EpArgs) (body io.Re
 	In the future, you would not call this function directly, but
 		instead use this helper function for the specific action.
 */
-func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (err error) {
+func (c *Application) Do(r *Request, name string, args EpArgs, v interface{}) (err error) {
 	body, err := c.request(r, name, args)
 
 	if err != nil {
-//		fmt.Printf("(appnet.Do 1) err = '%s'\n", err)
+		//		fmt.Printf("(appnet.Do 1) err = '%s'\n", err)
 		return
 	}
 
@@ -102,21 +101,14 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	resp, err := ioutil.ReadAll(body)
 
 	if err != nil {
-//		fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
+		//		fmt.Printf("(appnet.Do 2) err = '%s'\n", err)
 		return
 	}
 
 	epOptions := ApiEndpoints[name].Options
 
 	if epOptions == nil || epOptions.ResponseEnvelope {
-		re := &responseEnvelope{Data: v}
-
-//		respReader := bytes.NewReader(resp)
-//		respDecoder := json.NewDecoder(respReader)
-
-//		err = respDecoder.Decode(v)
-
-		err = json.Unmarshal(resp, re)
+		err = json.Unmarshal(resp, v)
 
 		if err != nil {
 			fmt.Printf("(appnet.Do 3) err = '%s'\n", err)
@@ -139,7 +131,7 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 }
 
 // Generate the authentication URL for the server-side flow.
-func (c *Application) AuthenticationURL (state string) (string, error) {
+func (c *Application) AuthenticationURL(state string) (string, error) {
 	var url bytes.Buffer
 
 	args := struct {
@@ -163,7 +155,7 @@ func (c *Application) AuthenticationURL (state string) (string, error) {
 	AccessToken() uses this code to request an access token for the
 		user, which is returned as a string.
 */
-func (c *Application) AccessToken (code string) (string, error) {
+func (c *Application) AccessToken(code string) (string, error) {
 	data := url.Values{}
 	data.Set("client_id", c.Id)
 	data.Set("client_secret", c.Secret)
@@ -201,7 +193,7 @@ func (c *Application) AccessToken (code string) (string, error) {
 
 		** Works **
 */
-func (c *Application) PasswordToken (userName, userPassword string) (aToken string, err error) {
+func (c *Application) PasswordToken(userName, userPassword string) (aToken string, err error) {
 	type Response struct {
 		AccessToken string `json:"access_token"`
 		Error       string
@@ -215,12 +207,12 @@ func (c *Application) PasswordToken (userName, userPassword string) (aToken stri
 	data.Set("password", userPassword)
 	data.Set("scope", c.Scopes.Spaced())
 
-	r := &Request {
+	r := &Request{
 		Body:     strings.NewReader(data.Encode()),
 		BodyType: "application/x-www-form-urlencoded",
 	}
 
-	resp := &Response {}
+	resp := &Response{}
 
 	err = c.Do(r, "get access token", EpArgs{}, resp)
 
@@ -238,4 +230,3 @@ func (c *Application) PasswordToken (userName, userPassword string) (aToken stri
 
 	return
 }
-
