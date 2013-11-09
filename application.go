@@ -109,13 +109,6 @@ func (c *Application) Do (r *Request, name string, args EpArgs, v interface{}) (
 	epOptions := ApiEndpoints[name].Options
 
 	if epOptions == nil || epOptions.ResponseEnvelope {
-		re := &responseEnvelope{Data: v}
-
-//		respReader := bytes.NewReader(resp)
-//		respDecoder := json.NewDecoder(respReader)
-
-//		err = respDecoder.Decode(v)
-
 		err = json.Unmarshal(resp, v)
 
 		if err != nil {
