@@ -2,10 +2,9 @@
 // Use of this source code is governed by the ISC
 // license that can be found in the LICENSE file.
 
-package appnet
+package adn
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -46,29 +45,10 @@ type Counts struct {
 	Stars     int `json:"stars"`     // The number of posts starred by this user.
 }
 
-/*
-	Retrieve the user specified by id using token as authentication.
-
-	The idname can be either a user id *OR* an @username
-*/
-func (c *Application) GetUser(aToken string, idname string) (u *User, err error) {
-	var epArgs EpArgs
-
-    req := &Request { Token: aToken }
-
-    resp := &User {}
-
-	epArgs.User = idname
-
-	err = c.Do(req, "retrieve user", epArgs, resp)
-
-	if err != nil {
-		fmt.Printf("(GetUser 1) err = %s\n", err)
-		return
-	}
-
-//	fmt.Printf("(GetUser 2) User ID = %s\n", u.Id)
-
+// Retrieve the user specified by id using token as authentication.
+func (c *Application) GetUser(token string, id string) (u *User, err error) {
+	u = &User{}
+	err = c.Do(&Request{Token: token}, "retrieve user", EpArgs{User: id}, u)
 	return
 }
 
